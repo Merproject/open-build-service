@@ -86,6 +86,9 @@ class ApplicationController < ActionController::Base
   end
 
   def extract_ldap_user
+    # Reject empty passwords to prevent LDAP lockouts.
+    return if @passwd.blank?
+
     begin
       require 'ldap'
       logger.debug( "Using LDAP to find #{@login}" )
@@ -233,11 +236,6 @@ class ApplicationController < ActionController::Base
       extract_basic_auth_user
 
       if CONFIG['ldap_mode'] == :on
-        # disallow empty passwords to prevent LDAP lockouts
-        if @passwd.blank?
-          raise AuthenticationRequiredError.new "User '#{@login}' did not provide a password"
-        end
-
         extract_ldap_user
       end
 
