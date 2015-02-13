@@ -36,8 +36,8 @@ License:        GPL-2.0 and GPL-3.0
 Group:          Productivity/Networking/Web/Utilities
 %if 0%{?suse_version} < 1210 && 0%{?suse_version:1}
 %endif
-Version: 2.5.4
-Release: 2
+Version: 2.5.4.skytree38
+Release: 1
 Url:            http://en.opensuse.org/Build_Service
 BuildRoot:      %{_tmppath}/%{name}-%{version}-build
 # Sources are retrieved using script which is attached as Source2
@@ -71,6 +71,9 @@ Patch26:	0026-backend-obs_admin-source-deletion-should-handle-_ser.patch
 Patch27:	0027-backend-obs_admin-source-deletion-needs-to-match-_li.patch
 Patch28:	0028-backend-use-manifestfile-and-servicemanifestfile-var.patch
 Patch29:	0029-webui-relax-the-monitor-test-case-a-bit-when-executi.patch
+Patch30:	0030-api-remove-reference-to-User-role-for-LDAP-issue-820.patch
+Patch31:	0031-api-Don-t-raise-error-if-password-is-empty-and-LDAP-.patch
+Patch32:	0032-Changing-the-add-repository-link-to-use-the-advanced.patch
 BuildRequires:  python-devel
 # make sure this is in sync with the RAILS_GEM_VERSION specified in the
 # config/environment.rb of the various applications.
@@ -366,6 +369,9 @@ obs_project_update is a tool to copy a packages of a project from one obs to ano
 %patch27 -p1
 %patch28 -p1
 %patch29 -p1
+%patch30 -p1
+%patch31 -p1
+%patch32 -p1
 # drop build script, we require the installed one from own package
 rm -rf src/build
 find . -name .git\* -o -name Capfile -o -name deploy.rb | xargs rm -rf
