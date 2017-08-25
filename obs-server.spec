@@ -409,6 +409,9 @@ for i in obssrcserver obsrepserver obsscheduler obsworker obspublisher obsdispat
            $RPM_BUILD_ROOT/etc/init.d/
   ln -sf /etc/init.d/$i $RPM_BUILD_ROOT/usr/sbin/rc$i
 done
+# and systemd units
+install -D -m 0644 obsworker.service $RPM_BUILD_ROOT/%{_unitdir}/obsworker.service
+install -D -m 0644 obsstoragesetup.service $RPM_BUILD_ROOT/%{_unitdir}/obsstoragesetup.service
 # install logrotate
 install -d -m 755 $RPM_BUILD_ROOT/etc/logrotate.d/
 for i in obs-api obs-build obs-server ; do
@@ -772,6 +775,8 @@ chown %{apache_user}:%{apache_group} /srv/www/obs/api/log/production.log
 /etc/init.d/obsstoragesetup
 /usr/sbin/rcobsworker
 /usr/sbin/rcobsstoragesetup
+%{_unitdir}/obsworker.service
+%{_unitdir}/obsstoragesetup.service
 
 %files -n obs-api
 %defattr(-,root,root)
